@@ -51,7 +51,7 @@ class OpenSSLHelper
         $configMap = [
             CommonConstant::KEY_PAIR_TYPE_RSA => [
                 'private_key_type' => OPENSSL_KEYTYPE_RSA,
-                'private_key_bits' => 4096,
+                'private_key_bits' => 2048,
             ],
 
             CommonConstant::KEY_PAIR_TYPE_EC => [
@@ -116,7 +116,7 @@ class OpenSSLHelper
             HOME = .
             RANDFILE = \$ENV::HOME/.rnd
             [ req ]
-            default_bits = 4096
+            default_bits = 2048
             default_keyfile = privkey.pem
             distinguished_name = req_distinguished_name
             req_extensions = v3_req
