@@ -132,19 +132,27 @@ class OrderService
     private $_orderInfoPath;
 
     /**
+     * Key length in bits. Default value is 2048
+     * @var int
+     */
+    private $_bits;
+
+    /**
      * OrderService constructor.
      * @param array $domainInfo
      * @param string $algorithm
      * @param bool $renew
+     * @param int $bits
      * @throws OrderException
      * @throws \stonemax\acme2\exceptions\AccountException
      * @throws \stonemax\acme2\exceptions\NonceException
      * @throws \stonemax\acme2\exceptions\RequestException
      */
-    public function __construct($domainInfo, $algorithm, $renew = FALSE)
+    public function __construct($domainInfo, $algorithm, $renew = FALSE, $bits = 2048)
     {
         $this->_algorithm = $algorithm;
         $this->_renew = boolval($renew);
+        $this->_bits = $bits;
 
         if ($this->_algorithm == CommonConstant::KEY_PAIR_TYPE_EC && version_compare(PHP_VERSION, '7.1.0') == -1)
         {
@@ -579,7 +587,8 @@ class OrderService
         $csr = OpenSSLHelper::generateCSR(
             $domainList,
             ['commonName' => CommonHelper::getCommonNameForCSR($domainList)],
-            $this->getPrivateKey()
+            $this->getPrivateKey(),
+            $this->_bits
         );
 
         file_put_contents($this->_csrPath, $csr);
@@ -608,7 +617,7 @@ class OrderService
      */
     private function createKeyPairFile()
     {
-        $keyPair = OpenSSLHelper::generateKeyPair($this->_algorithm);
+        $keyPair = OpenSSLHelper::generateKeyPair($this->_algorithm, $this->_bits);
 
         $result = file_put_contents($this->_privateKeyPath, $keyPair['privateKey'])
             && file_put_contents($this->_publicKeyPath, $keyPair['publicKey']);

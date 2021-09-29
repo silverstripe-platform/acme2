@@ -103,17 +103,18 @@ class Runtime
      * @param array $domainInfo
      * @param string $algorithm
      * @param bool $renew
+     * @param int $bits
      * @return OrderService
      * @throws exceptions\AccountException
      * @throws exceptions\NonceException
      * @throws exceptions\OrderException
      * @throws exceptions\RequestException
      */
-    public function getOrder($domainInfo, $algorithm, $renew)
+    public function getOrder($domainInfo, $algorithm, $renew, $bits = 2048)
     {
         if (!$this->order)
         {
-            $this->order = new OrderService($domainInfo, $algorithm, $renew);
+            $this->order = new OrderService($domainInfo, $algorithm, $renew, $bits);
         }
 
         return $this->order;
