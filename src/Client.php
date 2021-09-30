@@ -49,14 +49,15 @@ class Client
      * @param array $domainInfo
      * @param string $algorithm
      * @param bool $renew
+     * @param int $bits
      * @return services\OrderService
      * @throws exceptions\AccountException
      * @throws exceptions\NonceException
      * @throws exceptions\OrderException
      * @throws exceptions\RequestException
      */
-    public function getOrder($domainInfo, $algorithm, $renew = FALSE)
+    public function getOrder($domainInfo, $algorithm, $renew = FALSE, $bits = 2048)
     {
-        return self::$runtime->getOrder($domainInfo, $algorithm, $renew);
+        return self::$runtime->getOrder($domainInfo, $algorithm, $renew, $bits);
     }
 }
