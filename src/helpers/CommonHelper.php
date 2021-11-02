@@ -124,20 +124,7 @@ class CommonHelper
      */
     public static function getCommonNameForCSR($domainList)
     {
-        $domainLevel = [];
-
-        foreach ($domainList as $domain)
-        {
-            $domainLevel[count(explode('.', $domain))][] = $domain;
-        }
-
-        ksort($domainLevel);
-
-        $shortestDomainList = reset($domainLevel);
-
-        sort($shortestDomainList);
-
-        return $shortestDomainList[0];
+        return $domainList[0];
     }
 
     /**
